@@ -1,15 +1,27 @@
 import { Controller, Get, Post } from '@nestjs/common';
+import { User, UsersService } from './users.service';
 
 // http://localhost:3000/users
 @Controller('users')
 export class UsersController {
   @Get()
-  getUsers() {
-    return 'You made a GET request to get all users';
+  getUsers(): User[] {
+    const userService = new UsersService();
+    return userService.getAllUsers();
   }
 
   @Post()
   createUser() {
-    return 'You made a POST request to create a user';
+    const user: User = {
+      id: 3,
+      name: 'Brad',
+      age: 30,
+      gender: 'male',
+      isMarried: true,
+    };
+    const userService = new UsersService();
+    userService.createUser(user);
+
+    return `User with id ${user.id} has been created.`;
   }
 }
